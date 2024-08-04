@@ -3,9 +3,9 @@
  * Author: Jscriptural
  * email: isongjohn014@gmail.com
  *
- * Factorise a positive into its prime factors.
+ * Factorise a positive integer into its prime factors.
  * CAVEAT:  WHEN GIVEN A NEGATIVE NUMBER IT IGNORES THE SIGN
- *
+ * 
  */
 #include <stdio.h>
 #include <stdlib.h>

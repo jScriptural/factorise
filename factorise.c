@@ -12,12 +12,9 @@
 #include <math.h>
 #include <stdint.h>
 
-
-
 uint64_t fac[1024]={0};
 int ind = 0;
 typedef char* string;
-
 
 
 void factors(uint64_t num);

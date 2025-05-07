@@ -19,10 +19,7 @@ typedef char* string;
 
 void factors(uint64_t num);
 int compar(const void *a, const void *b);
-/* factorise num
- * return 0 if num is prime else return 1
- */
-int factorise(uint64_t num,uint64_t *x, uint64_t *y);
+static int factorise(uint64_t num,uint64_t *x, uint64_t *y);
 
 
 
@@ -33,12 +30,14 @@ int main(int argc, string argv[])
   for(int i =1; i < argc; ++i)
   {
     orig_num = strtol(argv[i], NULL, 10);
+    
+    //if number is negative
+    //make it positive
     if(orig_num < 0)
       orig_num *= -1;
 
-    uint64_t num = orig_num ;
-    
-    while((num % 2) == 0 && num != 0)
+    uint64_t num = orig_num; 
+    while(num != 0 && (num % 2) == 0)
     {
       fac[ind++] = 2;
       num /= 2;
@@ -47,6 +46,8 @@ int main(int argc, string argv[])
     if(num != 1)
       factors(num);
 
+
+    //sort factors in ascending order
     if(ind > 1)
       qsort(fac,(size_t)ind, sizeof(uint64_t),&compar);
 
@@ -64,9 +65,8 @@ int main(int argc, string argv[])
 void factors(uint64_t num)
 {
   uint64_t x,y;
-  if(!factorise(num,&x,&y) )
+  if(factorise(num,&x,&y) == 0)
   {
-    //printf("fac[%d]: %ld\n",ind, num);
     fac[ind++] = num;
     return;
   }
@@ -77,6 +77,13 @@ void factors(uint64_t num)
 
 int factorise(uint64_t num,uint64_t *x, uint64_t *y)
 {
+  //This function uses fermat method
+  //to factorise a number.
+  //The general idea is that to
+  //factorise a number say b, 
+  //we look for a number n such that 
+  //(n*n - b) = k*k, a perfect square.
+  //implies that b = (n+k)(n-k);
   uint64_t j,int_k;
   double frac_k;
 
@@ -91,7 +98,7 @@ int factorise(uint64_t num,uint64_t *x, uint64_t *y)
     frac_k = sqrt(j*j - num);
     int_k = (uint64_t) frac_k;
   }
-  *x = int_k + j;
+  *x = j + int_k;
   *y = j - int_k;
 
   if(j < ((num+1)/2))
